@@ -1,0 +1,71 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package valetparking.db;
+
+
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import valetparking.entity.Employee;
+import valetparking.util.PersistenceConnection;
+
+/**
+ *
+ * @author wahhid
+ */
+public class EmployeeController extends PersistenceConnection {
+            
+    private int ErrStatus=0;
+    private String ErrMsg="";
+    
+    public EmployeeController(EntityManagerFactory emf){
+        super(emf);
+    }
+    
+    public List<Employee> getAll(){
+        List<Employee> employees;
+        this.CreateEntityManager();
+        Query query = em.createNamedQuery("Employee.findAll");
+        employees = query.getResultList();
+        this.CloseEntityManager();
+        return employees;
+    }
+
+    public Employee getByNik(String nik){
+        Employee employee = null;
+        try{
+            this.CreateEntityManager();
+            employee = (Employee) em.createNamedQuery("Employee.findByNik").setParameter("nik", nik).getSingleResult();
+            this.CloseEntityManager();
+        }catch(NoResultException ex){
+            employee = null;
+            this.CloseEntityManager();
+        }
+        return employee;
+    }
+
+
+    public String getErrMsg() {
+        return ErrMsg;
+    }
+
+    public void setErrMsg(String ErrMsg) {
+        this.ErrMsg = ErrMsg;
+    }
+
+    public int getErrStatus() {
+        return ErrStatus;
+    }
+
+    public void setErrStatus(int ErrStatus) {
+        this.ErrStatus = ErrStatus;
+    }
+        
+    
+}

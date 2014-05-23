@@ -1,0 +1,300 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/*
+ * ChangeDriverDialog.java
+ *
+ * Created on Jul 12, 2011, 6:43:04 PM
+ */
+package valetparking.gui;
+
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import valetparking.controller.ChangeDriverController;
+import valetparking.db.EmployeeController;
+import valetparking.db.TransvaletController;
+import valetparking.entity.Employee;
+import valetparking.entity.Transvalet;
+
+/**
+ *
+ * @author wahhid
+ */
+public class ChangeDriverDialog extends javax.swing.JDialog {
+    
+    private ChangeDriverController controller;
+    private ValetFrame parent;
+    
+    /** Creates new form ChangeDriverDialog */
+    public ChangeDriverDialog(ValetFrame parent,ChangeDriverController controller,boolean modal) {
+        super(parent, modal);        
+        this.parent = parent;
+        this.controller = controller;
+        initComponents();        
+         this.txttransid.addKeyListener(new TexttransidKeyListener());
+        this.txtnewdriver.addKeyListener(new TextnewdriverKeyListener());
+        this.txtnewdriver.setEnabled(false);
+    }
+    
+    private void closeDialog(){
+        this.parent.getTxtplatnumber().requestFocus();
+        this.dispose();
+    }
+    
+    private TransvaletController getTransvaletController(){
+        return this.controller.getBackingController().getTransvaletController();
+    }
+
+    private EmployeeController getEmployeeController(){
+        return this.controller.getBackingController().getEmployeeController();
+    }
+    
+    private class TexttransidKeyListener implements KeyListener{
+
+        @Override
+        public void keyTyped(KeyEvent e) {
+            
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {            
+            int keyCode = e.getKeyCode();                        
+            if(keyCode == KeyEvent.VK_ENTER){
+                if(txttransid.getText().length() > 0){
+                    controller.getTransaction(txttransid.getText());
+                    if(controller.getTransvalet() != null){
+                        if(controller.getDrivertype() == 0){
+                            txtolddriver.setText(controller.getTransvalet().getDriverin());
+                        }else{                        
+                            txtolddriver.setText(controller.getTransvalet().getDriverout());
+                        }
+                        txtnewdriver.setEnabled(true);
+                        txtnewdriver.requestFocus();                        
+                    }else{
+                        lblMessage.setText("Transaction not found");
+                        txttransid.setText("");                        
+                    }                   
+                }else{
+                    lblMessage.setText("Trans ID was empty");
+                }
+            }
+            
+            if(keyCode == KeyEvent.VK_ESCAPE){
+                if(txttransid.getText().length()>0){
+                    txttransid.setText("");
+                }else{                    
+                    closeDialog();
+                }
+            }
+            
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            
+        }        
+    }
+    
+    private class TextnewdriverKeyListener implements KeyListener{
+        
+        @Override
+        public void keyTyped(KeyEvent e) {
+            
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            int keyCode = e.getKeyCode();
+            
+            if(keyCode == KeyEvent.VK_ENTER){
+                if(txtnewdriver.getText().length() > 0){
+                    controller.getDriver(txtnewdriver.getText());
+                    if(controller.getEmployee() != null){
+                        if(controller.getDrivertype() == 0){
+                            controller.getTransvalet().setDriverin(txtnewdriver.getText());
+                        }else{
+                            controller.getTransvalet().setDriverout(txtnewdriver.getText());
+                        }
+                        controller.save();
+                        closeDialog();
+                    }else{                        
+                        lblMessage.setText("Driver not found");   
+                        txtnewdriver.setText("");                        
+                    }
+                }else{
+                    lblMessage.setText("New Driver was empty");
+                }
+            }
+            
+            if(keyCode == KeyEvent.VK_ESCAPE){
+                if(txtnewdriver.getText().length() > 0){
+                    lblMessage.setText("New Driver wasn't empty");
+                }else{
+                    txttransid.requestFocus();
+                    txtnewdriver.setText("");
+                    txtnewdriver.setEnabled(false);
+                }
+            }
+           
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            
+        }        
+    }                
+    /** This method is called from within the constructor to
+     * initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is
+     * always regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        txttransid = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        txtolddriver = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        txtnewdriver = new javax.swing.JTextField();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        lblMessage = new javax.swing.JLabel();
+
+        setBackground(new java.awt.Color(204, 0, 255));
+        setResizable(false);
+        setUndecorated(true);
+
+        jPanel1.setBackground(new java.awt.Color(204, 0, 204));
+
+        jLabel1.setFont(new java.awt.Font("Trebuchet MS", 0, 18));
+        jLabel1.setText("Trans ID");
+
+        txttransid.setBackground(new java.awt.Color(255, 102, 255));
+        txttransid.setFont(new java.awt.Font("Trebuchet MS", 0, 18)); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Trebuchet MS", 0, 18));
+        jLabel2.setText("Old Driver");
+
+        txtolddriver.setBackground(new java.awt.Color(255, 102, 255));
+        txtolddriver.setEditable(false);
+        txtolddriver.setFont(new java.awt.Font("Trebuchet MS", 0, 18)); // NOI18N
+
+        jLabel3.setFont(new java.awt.Font("Trebuchet MS", 0, 18));
+        jLabel3.setText("New Driver");
+
+        txtnewdriver.setBackground(new java.awt.Color(255, 102, 255));
+        txtnewdriver.setFont(new java.awt.Font("Trebuchet MS", 0, 18)); // NOI18N
+        txtnewdriver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtnewdriverActionPerformed(evt);
+            }
+        });
+
+        jPanel2.setOpaque(false);
+
+        jLabel4.setFont(new java.awt.Font("Trebuchet MS", 0, 18));
+        jLabel4.setText("Enter : Process , Esc : Back or Exit");
+
+        lblMessage.setFont(new java.awt.Font("Trebuchet MS", 0, 18));
+        lblMessage.setText("-");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
+                    .addComponent(lblMessage, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblMessage)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txttransid, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtolddriver, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtnewdriver, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txttransid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtolddriver, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtnewdriver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        setBounds((screenSize.width-530)/2, (screenSize.height-191)/2, 530, 191);
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void txtnewdriverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnewdriverActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtnewdriverActionPerformed
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lblMessage;
+    private javax.swing.JTextField txtnewdriver;
+    private javax.swing.JTextField txtolddriver;
+    private javax.swing.JTextField txttransid;
+    // End of variables declaration//GEN-END:variables
+}

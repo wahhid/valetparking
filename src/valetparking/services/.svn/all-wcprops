@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/ValetParking/!svn/ver/3/ValetParking/src/valetparking/services
+END
+ReportProcess.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/ValetParking/!svn/ver/3/ValetParking/src/valetparking/services/ReportProcess.java
+END
+FindShift.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/ValetParking/!svn/ver/5/ValetParking/src/valetparking/services/FindShift.java
+END
+UserAuthentication.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/ValetParking/!svn/ver/5/ValetParking/src/valetparking/services/UserAuthentication.java
+END
+TransactionProcess.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/ValetParking/!svn/ver/3/ValetParking/src/valetparking/services/TransactionProcess.java
+END

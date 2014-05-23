@@ -1,0 +1,87 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package valetparking.services;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import valetparking.controller.ValetController;
+import valetparking.entity.Shift;
+
+/**
+ *
+ * @author wahhid
+ */
+public class FindShift {
+        
+    private ValetController controller;
+    
+    private SimpleDateFormat fullFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+    
+    public FindShift(ValetController controller){
+        this.controller = controller;
+    }
+    
+    public Shift Find(){
+        List<Shift> shifts;
+        Shift currentShift = new Shift();
+        shifts = this.controller.getShiftController().getAll();
+        if(shifts != null){
+            for(Shift shift : shifts){
+                Date currentDate = new Date(System.currentTimeMillis());
+                String strCurrentDate = dateFormat.format(currentDate);
+                if(shift.getNextday() == false){
+                    try {
+                        //Same Day
+                        Date startTime = fullFormat.parse(strCurrentDate + " " + timeFormat.format(shift.getStarttime()));
+                        Date endTime = fullFormat.parse(strCurrentDate + " " + timeFormat.format(shift.getEndtime()));
+                        if(startTime.before(currentDate) && endTime.after(currentDate)){
+                            currentShift = shift;
+                            break;
+                        }
+                    } catch (ParseException ex) {
+                        System.out.println();
+                    }                                        
+                }else{
+                    //Next Day
+                    Date testStartTime = null;
+                    Date testEndTime = null; 
+                    try {
+                        testStartTime = fullFormat.parse(strCurrentDate + " 00:00:00");
+                        testEndTime = fullFormat.parse(strCurrentDate + " 07:00:00");
+                    } catch (ParseException ex) {
+                        System.out.print(ex.getMessage());
+                    }                    
+                    if(currentDate.after(testStartTime) && currentDate.before(testEndTime) ){
+                        currentShift = shift;
+                        break;
+                    }else{
+                        try {
+                            testStartTime = fullFormat.parse(strCurrentDate + " 22:00:00");
+                            testEndTime = fullFormat.parse(strCurrentDate + " 23:59:99");                        
+                            if(currentDate.after(testStartTime) && currentDate.before(testEndTime)){
+                                currentShift = shift;
+                                break;
+                            }else{
+                                currentShift = null;
+                            }
+                        } catch (ParseException ex) {
+                            Logger.getLogger(FindShift.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    
+                }
+            }
+        }else{
+            currentShift = null;
+        }        
+        return currentShift;
+    }
+}

@@ -1,0 +1,56 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package valetparking.controller;
+
+
+import valetparking.gui.LoginFrame;
+
+/**
+ *
+ * @author wahhid
+ */
+public class LoginController extends BackingController{
+        
+    private String nik;
+    private String boothid;
+    private LoginFrame loginFrame;
+    
+    public LoginController(){        
+        this.loginFrame = new LoginFrame(this);
+        this.loginFrame.show();
+    }
+        
+    public void showLoginFrame(){
+        this.loginFrame.show();
+    }
+    
+    public void hideLoginFrame(){
+        this.loginFrame.show(false);
+    }
+        
+    public String getBoothid() {
+        return boothid;
+    }
+
+    public void setBoothid(String boothid) {
+        this.boothid = boothid;
+    }
+
+    public String getNik() {
+        return nik;
+    }
+
+    public void setNik(String nik) {
+        this.nik = nik;
+    }
+
+    
+
+    
+    
+ 
+    
+    
+}

@@ -1,0 +1,66 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package valetparking.controller;
+
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import valetparking.db.BoothController;
+import valetparking.db.EmployeeController;
+import valetparking.db.IdseqController;
+import valetparking.db.PricingController;
+import valetparking.db.ShiftController;
+import valetparking.db.TransvaletController;
+
+/**
+ *
+ * @author wahhid
+ */
+public class BackingController {
+    protected EntityManagerFactory emf = Persistence.createEntityManagerFactory("ValetParkingPU");  
+            
+    private EmployeeController employeeController;
+    private BoothController boothController;
+    private PricingController pricingController;
+    private ShiftController shiftController;
+    private TransvaletController transvaletController;   
+    private IdseqController idseqController;
+
+    public BackingController(){
+        this.employeeController = new EmployeeController(this.emf);
+        this.boothController = new BoothController(this.emf);
+        this.pricingController = new PricingController(this.emf);
+        this.shiftController = new ShiftController(this.emf);
+        this.transvaletController = new TransvaletController(this.emf);
+        this.idseqController = new IdseqController(this.emf);
+    }
+
+    public BoothController getBoothController() {
+        return boothController;
+    }
+
+    public EmployeeController getEmployeeController() {
+        return employeeController;
+    }
+
+    public PricingController getPricingController() {
+        return pricingController;
+    }
+
+    public ShiftController getShiftController() {
+        return shiftController;
+    }
+
+    public TransvaletController getTransvaletController() {
+        return transvaletController;
+    }
+
+    public IdseqController getIdseqController() {
+        return idseqController;
+    }
+    
+    
+    
+    
+}

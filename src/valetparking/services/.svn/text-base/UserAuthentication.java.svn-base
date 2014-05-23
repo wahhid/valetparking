@@ -1,0 +1,55 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package valetparking.services;
+
+import javax.persistence.EntityManagerFactory;
+import valetparking.controller.LoginController;
+import valetparking.db.BoothController;
+import valetparking.db.EmployeeController;
+import valetparking.entity.Auth;
+import valetparking.entity.Booth;
+import valetparking.entity.Employee;
+
+/**
+ *
+ * @author wahhid
+ */
+public class UserAuthentication {
+ 
+    private LoginController loginController;
+    private Auth auth;
+    
+    public UserAuthentication(LoginController loginController){        
+        this.auth = new Auth();
+        this.loginController = loginController;
+    }
+    
+    public boolean Authenticate(String nik,String password, String boothid){
+        boolean loginStatus=false;
+        Booth booth = this.loginController.getBoothController().getByBoothID(boothid);        
+        if(booth != null){
+            Employee employee = this.loginController.getEmployeeController().getByNik(nik);            
+            if(employee != null){
+                if(employee.getPassword().equals(password) && booth.getStatus() == true){
+                    auth.setNik(nik);
+                    auth.setBooth(boothid);
+                    auth.setBoothname(booth.getBoothname());
+                    auth.setEmployeename(employee.getFullname());
+                    auth.setPrintin(booth.getPrintin());
+                    auth.setPrintout(booth.getPrintout());
+                    loginStatus = true;
+                }
+            }
+        }
+        return loginStatus;
+    }
+
+    public Auth getAuth() {
+        return auth;
+    }
+    
+    
+    
+}

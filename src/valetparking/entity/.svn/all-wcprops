@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/ValetParking/!svn/ver/3/ValetParking/src/valetparking/entity
+END
+Employee.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/ValetParking/!svn/ver/4/ValetParking/src/valetparking/entity/Employee.java
+END
+Auth.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/ValetParking/!svn/ver/3/ValetParking/src/valetparking/entity/Auth.java
+END
+Transvalet.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/ValetParking/!svn/ver/5/ValetParking/src/valetparking/entity/Transvalet.java
+END
+Booth.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/ValetParking/!svn/ver/4/ValetParking/src/valetparking/entity/Booth.java
+END
+Pricing.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/ValetParking/!svn/ver/4/ValetParking/src/valetparking/entity/Pricing.java
+END
+Transcorrection.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/ValetParking/!svn/ver/3/ValetParking/src/valetparking/entity/Transcorrection.java
+END
+Idseq.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/ValetParking/!svn/ver/4/ValetParking/src/valetparking/entity/Idseq.java
+END
+Shift.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/ValetParking/!svn/ver/4/ValetParking/src/valetparking/entity/Shift.java
+END
+Transreprint.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/ValetParking/!svn/ver/5/ValetParking/src/valetparking/entity/Transreprint.java
+END

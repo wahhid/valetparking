@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="ValetParkingPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>valetparking.entity.Idseq</class>
+    <class>valetparking.entity.Employee</class>
+    <class>valetparking.entity.Booth</class>
+    <class>valetparking.entity.Transcorrection</class>
+    <class>valetparking.entity.Pricing</class>
+    <class>valetparking.entity.Shift</class>
+    <class>valetparking.entity.Transreprint</class>
+    <class>valetparking.entity.Transvalet</class>
+    <class>valetparking.entity.Voucher</class>
+    <class>valetparking.entity.Voucherdetail</class>
+    <class>valetparking.entity.Vouchertype</class>
+    <class>valetparking.entity.Logging</class>
+    <class>valetparking.entity.Loginhistory</class>
+    <class>valetparking.entity.Configuration</class>
+    <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://172.16.0.17:3306/parkdb1"/>
+      <property name="javax.persistence.jdbc.password" value="P@ssw0rd"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.user" value="userdb"/>
+    </properties>
+  </persistence-unit>
+</persistence>

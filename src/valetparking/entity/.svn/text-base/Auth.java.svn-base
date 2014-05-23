@@ -1,0 +1,91 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package valetparking.entity;
+
+/**
+ *
+ * @author wahhid
+ */
+public class Auth {
+ 
+    private String nik;
+    private String employeename;
+    private String booth;
+    private String boothname;
+    private boolean login;
+    private boolean printin;
+    private boolean printout;
+    
+    public Auth(){
+                
+    }
+
+    public String getBooth() {
+        return booth;
+    }
+
+    public void setBooth(String booth) {
+        this.booth = booth;
+    }
+
+    public String getNik() {
+        return nik;
+    }
+
+    public void setNik(String nik) {
+        this.nik = nik;
+    }
+
+    public boolean isLogin() {
+        return login;
+    }
+
+    public void setLogin(boolean login) {
+        this.login = login;
+    }
+
+    public String getBoothname() {
+        return boothname;
+    }
+
+    public void setBoothname(String boothname) {
+        this.boothname = boothname;
+    }
+
+    public String getEmployeename() {
+        return employeename;
+    }
+
+    public void setEmployeename(String employeename) {
+        this.employeename = employeename;
+    }
+
+    public boolean isPrintin() {
+        return printin;
+    }
+
+    public void setPrintin(boolean printin) {
+        this.printin = printin;
+    }
+
+    public boolean isPrintout() {
+        return printout;
+    }
+
+    public void setPrintout(boolean printout) {
+        this.printout = printout;
+    }
+
+    
+    public void clear(){
+        this.booth = "";
+        this.boothname = "";
+        this.employeename = "";
+        this.nik = "";
+        this.login = false;
+        this.printin = false;
+        this.printout = false;
+    }            
+}

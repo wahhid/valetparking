@@ -1,0 +1,47 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package valetparking.util;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import valetparking.controller.BackingController;
+import valetparking.entity.Idseq;
+
+/**
+ *
+ * @author wahhid
+ */
+public class GenerateTransactionID extends BackingController {
+
+    
+    private SimpleDateFormat idFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+    
+    public GenerateTransactionID(){
+        
+    }
+    
+    public String generate(String boothid){
+        return idFormat.format(new Date(System.currentTimeMillis()));
+    }
+    
+    
+    public String generateSeq(String boothid,int seqlength){
+        String seq = null;
+        String prefix = "";
+        int seqvalue;
+        Idseq idseq = this.getIdseqController().getByBoothID(boothid);
+        if(idseq != null){
+            seqvalue = idseq.getSeqvalue();
+            idseq.setSeqvalue(idseq.getSeqvalue() + 1);
+            this.getIdseqController().update(idseq);      
+            seq = Integer.toString(seqvalue);
+            for(int i=0;i<seqlength-seq.length();i++){
+                prefix = prefix + "0";
+            }
+            seq = boothid + prefix + seq;
+        }
+        return seq;
+    }
+}

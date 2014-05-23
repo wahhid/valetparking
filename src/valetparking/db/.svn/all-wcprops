@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/ValetParking/!svn/ver/3/ValetParking/src/valetparking/db
+END
+IdseqController.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/ValetParking/!svn/ver/3/ValetParking/src/valetparking/db/IdseqController.java
+END
+ShiftController.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/ValetParking/!svn/ver/3/ValetParking/src/valetparking/db/ShiftController.java
+END
+EmployeeController.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/ValetParking/!svn/ver/3/ValetParking/src/valetparking/db/EmployeeController.java
+END
+TransvaletController.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/ValetParking/!svn/ver/3/ValetParking/src/valetparking/db/TransvaletController.java
+END
+BoothController.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/ValetParking/!svn/ver/3/ValetParking/src/valetparking/db/BoothController.java
+END
+PricingController.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/ValetParking/!svn/ver/3/ValetParking/src/valetparking/db/PricingController.java
+END

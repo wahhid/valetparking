@@ -1,0 +1,31 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package valetparking.util;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+/**
+ *
+ * @author wahhid
+ */
+public class PersistenceConnection {
+    protected EntityManagerFactory emf;
+    protected EntityManager em;
+    
+    public PersistenceConnection(EntityManagerFactory emf){
+        this.emf = emf;
+    }
+    
+    protected void CreateEntityManager(){
+        this.em = emf.createEntityManager();
+    }
+    
+    protected void CloseEntityManager(){
+        this.em.close();
+    }
+    
+}

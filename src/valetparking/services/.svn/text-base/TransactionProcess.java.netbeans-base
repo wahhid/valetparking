@@ -1,0 +1,97 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package valetparking.services;
+
+import valetparking.controller.ValetController;
+import valetparking.entity.Booth;
+import valetparking.entity.Employee;
+import valetparking.entity.Pricing;
+import valetparking.entity.Transvalet;
+
+/**
+ *
+ * @author wahhid
+ */
+public class TransactionProcess {
+    
+    private ValetController controller;
+ 
+    
+    public TransactionProcess(ValetController controller){
+        this.controller = controller;
+        
+    }
+    
+    public void addTransaction(Transvalet transvalet){
+        this.controller.getTransvaletController().add(transvalet);
+    }
+    
+    
+    public void updateTransaction(Transvalet transvalet){
+        this.controller.getTransvaletController().update(transvalet);
+    }
+    public Transvalet isCarExist(String carnumber){
+        Transvalet transvalet = this.controller.getTransvaletController().isCarExist(carnumber);
+        return transvalet;
+    }
+    
+    public Employee isEmployeeExist(String nik){
+        Employee employee = this.controller.getEmployeeController().getByNik(nik);        
+        return employee;
+                
+    }
+    
+    public String getOperatorNameByID(String nik){
+        String operatorname="";
+        Employee employee = this.controller.getEmployeeController().getByNik(nik);
+        if(employee != null){
+            operatorname = employee.getFullname();
+        }
+        return operatorname;
+    }
+    
+    public String getBoothName(String boothid){
+        String boothname="";
+        Booth booth = this.controller.getBoothController().getByBoothID(boothid);
+        if(booth != null){
+            boothname = booth.getBoothname();
+        }
+        return boothname;
+    }
+    
+    public void calculateDuration(Transvalet transvalet){
+        long milis1 = transvalet.getDatetimein().getTime();
+        long milis2 = transvalet.getDatetimeout().getTime();
+        
+        long diff = milis2 - milis1;
+        
+        long diffMinutes = diff / (60 * 1000);
+        long diffHours = diff / (60 * 60 * 1000);
+        
+        String strMinutes = Long.toString(diffMinutes - (diffHours * 60));
+        String strHours = Long.toString(diffHours);
+                
+        transvalet.setMinutes(Integer.parseInt(strMinutes));
+        transvalet.setHours(Integer.parseInt(strHours));
+        
+    }
+    
+    
+    public void calculateAmount(Transvalet transvalet){
+        Pricing pricing = this.controller.getPricingController().getActivePricing();
+        if(pricing != null){
+            transvalet.setPricingid(pricing.getPricingid());
+            transvalet.setValetcharge(pricing.getPricingservices());
+            if(transvalet.getMinutes() == 0){
+                transvalet.setParkingcharge(transvalet.getHours() * pricing.getPricinghourly());
+            }else{
+                transvalet.setParkingcharge((transvalet.getHours() + 1) * pricing.getPricinghourly());    
+            }
+            transvalet.setTotalcharge(transvalet.getValetcharge() + transvalet.getParkingcharge());
+        }
+        
+    }
+    
+}

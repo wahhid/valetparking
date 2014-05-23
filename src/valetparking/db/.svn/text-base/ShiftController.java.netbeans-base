@@ -1,0 +1,35 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package valetparking.db;
+
+import java.util.List;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import valetparking.entity.Shift;
+import valetparking.util.PersistenceConnection;
+
+/**
+ *
+ * @author wahhid
+ */
+public class ShiftController extends PersistenceConnection {
+    
+    public ShiftController(EntityManagerFactory emf){
+        super(emf);
+    }
+    
+    public List<Shift> getAll(){
+        List<Shift> shifts;
+        this.CreateEntityManager();
+        try{            
+            shifts = em.createNamedQuery("Shift.findAll").getResultList();                        
+        }catch(NoResultException ex){
+            shifts = null;            
+        }finally{
+            this.CloseEntityManager();
+        }
+        return shifts;
+    }
+}

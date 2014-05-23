@@ -1,0 +1,44 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package valetparking.controller;
+
+import javax.persistence.EntityManagerFactory;
+import valetparking.entity.Auth;
+import valetparking.gui.LoginFrame;
+import valetparking.gui.ValetFrame;
+
+/**
+ *
+ * @author wahhid
+ */
+public class ValetController extends BackingController{
+
+    private ValetFrame valetFrame;
+    private Auth auth;    
+    private LoginFrame loginFrame;
+    
+    public ValetController(LoginFrame loginFrame,Auth auth){
+        this.auth = auth;
+        this.loginFrame = loginFrame;
+        this.valetFrame = new ValetFrame(this);
+        this.valetFrame.show();                                
+        this.loginFrame.hide();
+    }
+
+    public Auth getAuth() {          
+        return auth;
+    }
+
+    public LoginFrame getLoginFrame() {
+        return loginFrame;
+    }
+    
+    
+    
+    
+    
+    
+            
+}

@@ -1,0 +1,95 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package valetparking.db;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import valetparking.entity.Booth;
+import valetparking.util.PersistenceConnection;
+
+/**
+ *
+ * @author wahhid
+ */
+public class BoothController extends PersistenceConnection {    
+    
+    private int ErrStatus=0;
+    private String ErrMsg="";
+    
+    public BoothController(EntityManagerFactory emf){
+        super(emf);
+    }
+        
+    public List<Booth> getAll(){
+        List<Booth> booths;        
+        this.CreateEntityManager();        
+        Query query = em.createNamedQuery("Booth.findAll");        
+        booths =  query.getResultList();
+        this.CloseEntityManager();
+        return booths;
+    }
+    
+    public Booth getByBoothID(String boothid){
+        Booth booth;
+        this.ErrMsg = "";
+        this.CreateEntityManager();
+        try{
+            booth = (Booth) em.createNamedQuery("Booth.findByBoothid").setParameter("boothid", boothid).getSingleResult();
+            this.CloseEntityManager();
+        }catch(NoResultException ex){
+            booth = null;
+            this.ErrMsg = ex.getMessage();
+            this.CloseEntityManager();
+        }        
+        return booth;
+    }
+
+    public List<Booth> findByQuery(String strSQL){
+        List<Booth> booths = null;
+        this.CreateEntityManager();
+        try{
+            Query query = em.createNativeQuery(strSQL);
+            booths = query.getResultList();
+        }catch(NoResultException ex){
+            System.out.println(ex.getMessage());            
+        }finally{
+            this.CloseEntityManager();
+        }                                
+        return booths;
+    }
+        
+        
+    
+    public String getErrMsg() {
+        return ErrMsg;
+    }
+
+    public void setErrMsg(String ErrMsg) {
+        this.ErrMsg = ErrMsg;
+    }
+
+    public int getErrStatus() {
+        return ErrStatus;
+    }
+
+    public void setErrStatus(int ErrStatus) {
+        this.ErrStatus = ErrStatus;
+    }
+    
+    
+    
+}

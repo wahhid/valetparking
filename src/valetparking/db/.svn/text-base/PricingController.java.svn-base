@@ -1,0 +1,39 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package valetparking.db;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import valetparking.entity.Pricing;
+import valetparking.util.PersistenceConnection;
+
+/**
+ *
+ * @author wahhid
+ */
+public class PricingController extends PersistenceConnection {
+             
+    public PricingController(EntityManagerFactory emf){
+        super(emf);
+    }
+    
+    public Pricing getActivePricing(){
+        Pricing pricing=null;
+        try{
+            this.CreateEntityManager();
+            this.em.getTransaction().begin();
+            pricing = (Pricing) em.createNamedQuery("Pricing.findByPricingenable").setParameter("pricingenable", 1).getSingleResult();
+            this.em.getTransaction().commit();
+            this.CloseEntityManager();        
+        }catch(NoResultException ex){
+            pricing = null;
+            System.out.println(ex.getMessage());
+        }
+        return pricing;
+    }
+    
+    
+}

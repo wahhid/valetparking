@@ -1,0 +1,47 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package valetparking.db;
+
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import valetparking.entity.Idseq;
+import valetparking.util.PersistenceConnection;
+
+/**
+ *
+ * @author wahhid
+ */
+public class IdseqController extends PersistenceConnection {
+    
+    public IdseqController(EntityManagerFactory emf){
+        super(emf);
+    }
+    
+    public Idseq getByBoothID(String boothid){
+        Idseq idseq;
+        try{
+            this.CreateEntityManager();
+            idseq = (Idseq) em.createNamedQuery("Idseq.findByBoothid").setParameter("boothid", boothid).getSingleResult();
+            this.CloseEntityManager();
+        }catch(NoResultException ex){
+            idseq = null;
+            System.out.println(ex.getMessage());
+        }
+        return idseq;
+    }
+    
+    public void update(Idseq idseq){        
+        try{
+            this.CreateEntityManager();
+            em.getTransaction().begin();
+            em.merge(idseq);            
+            em.getTransaction().commit();
+        }catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }finally{
+            this.CloseEntityManager();
+        }
+    }
+}

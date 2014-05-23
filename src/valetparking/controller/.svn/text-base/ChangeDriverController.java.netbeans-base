@@ -1,0 +1,25 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package valetparking.controller;
+
+
+import valetparking.gui.ChangeDriverDialog;
+import valetparking.gui.ValetFrame;
+
+/**
+ *
+ * @author wahhid
+ */
+public class ChangeDriverController extends BackingController {
+
+    private ChangeDriverDialog dialog;   
+        
+    public ChangeDriverController(ValetFrame parentFrame,int DriverType){        
+        this.dialog = new ChangeDriverDialog(parentFrame,this,DriverType,true);
+        this.dialog.show();
+    }
+    
+    
+}

@@ -1,0 +1,79 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package valetparking.db;
+
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import valetparking.entity.Transvalet;
+import valetparking.util.PersistenceConnection;
+
+/**
+ *
+ * @author wahhid
+ */
+public class TransvaletController extends PersistenceConnection{
+    
+    public TransvaletController(EntityManagerFactory emf){
+        super(emf);
+    }
+    
+    
+    public Transvalet getByTransID(String transid){
+        Transvalet transvalet=null;
+        this.CreateEntityManager();
+        try{
+            transvalet = (Transvalet) em.createNamedQuery("Transvalet.findByTransid").setParameter("transid", transid).getSingleResult();
+        }catch(NoResultException ex){
+            System.out.println("No Transvalet");
+        }finally{
+            this.CloseEntityManager();
+        }
+        return transvalet;
+    }
+    
+    public void add(Transvalet transvalet){
+        try{
+            this.CreateEntityManager();
+            em.getTransaction().begin();
+            em.persist(transvalet);
+            em.getTransaction().commit();
+            this.CloseEntityManager();
+        }catch(Exception ex){            
+            transvalet = null;            
+            this.CloseEntityManager();            
+        }                
+    }
+    
+    public void update(Transvalet transvalet){
+        this.CreateEntityManager();
+        try{           
+            em.getTransaction().begin();
+            em.merge(transvalet);
+            em.getTransaction().commit();            
+        }catch(Exception ex){
+            
+        }finally{
+            this.CloseEntityManager();
+        }        
+    }
+    
+    public Transvalet isCarExist(String carnumber){
+        Transvalet transvalet;
+        try{
+            this.CreateEntityManager();
+            String strSQL = "SELECT t from Transvalet t WHERE t.carnumber = :carnumber AND t.status = :status";
+            transvalet = (Transvalet) em.createQuery(strSQL)
+                    .setParameter("carnumber", carnumber)
+                    .setParameter("status", 0)
+                    .getSingleResult();                    
+            this.CloseEntityManager();
+        }catch(NoResultException ex){
+            transvalet = null;
+            System.out.println("Car doesn't exist");
+            this.CloseEntityManager();
+        }
+        return transvalet;
+    }        
+}
